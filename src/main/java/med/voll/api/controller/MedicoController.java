@@ -1,10 +1,8 @@
 package med.voll.api.controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.medico.DatosListadoMedico;
-import med.voll.api.medico.DatosRegistroMedico;
-import med.voll.api.medico.Medico;
-import med.voll.api.medico.MedicoRepository;
+import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +24,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public Page<DatosListadoMedico> listadoMedicos(@PageableDefault(size = 2,sort = "nombre") Pageable paginacion){  //@PageableDefault reescribe los valores por
+    public Page<DatosListadoMedico> listadoMedicos(@PageableDefault() Pageable paginacion){  //@PageableDefault reescribe los valores por
                                                                                                                     // defecto de paginacion que Spring plantea
        //http://localhost:8080/medicos?size=1
         // http://localhost:8080/medicos?size=1&page=1
@@ -36,6 +34,13 @@ public class MedicoController {
         return medicoRepository.findAll(paginacion).map(DatosListadoMedico::new);
     }
 
+    @PutMapping
+    @Transactional
+    public void actualizarMedicos(@RequestBody @Valid DatosActualizarMedico datosActualizarMedico){
+        Medico medico = medicoRepository.getReferenceById(datosActualizarMedico.id());
+        medico.actualizarDatos(datosActualizarMedico);
 
+
+    }
 
 }
