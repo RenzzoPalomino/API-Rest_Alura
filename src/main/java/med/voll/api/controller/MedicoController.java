@@ -25,14 +25,14 @@ public class MedicoController {
     }
 
     @GetMapping
-    public Page<DatosListadoMedico> listadoMedicos(@PageableDefault() Pageable paginacion){  //@PageableDefault reescribe los valores por
+    public Page<DatosListadoMedico> listadoMedicos(@PageableDefault(sort = "id") Pageable paginacion){  //@PageableDefault reescribe los valores por
                                                                                                                     // defecto de paginacion que Spring plantea
-       //http://localhost:8080/medicos?size=1
-        // http://localhost:8080/medicos?size=1&page=1
-
-       //para odernar en fx a un parametro:
-        //http://localhost:8080/medicos?size=10&page=0&sort=nombre
-        return medicoRepository.findAll(paginacion).map(DatosListadoMedico::new);
+                //http://localhost:8080/medicos?size=1
+                // http://localhost:8080/medicos?size=1&page=1
+                //para odernar en fx a un parametro:
+                //http://localhost:8080/medicos?size=10&page=0&sort=nombre
+    //listAll    return medicoRepository.findAll(paginacion).map(DatosListadoMedico::new);
+        return medicoRepository.findByActivoTrue(paginacion).map(DatosListadoMedico::new);
     }
 
     @PutMapping
@@ -42,12 +42,20 @@ public class MedicoController {
         medico.actualizarDatos(datosActualizarMedico);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") //eliminado fisico
     @Transactional
     public void eliminarMedico(@PathVariable Long id){
         Medico medico = medicoRepository.getReferenceById(id);
         medicoRepository.delete(medico);
-
     }
+
+    @DeleteMapping("/delete/{id}") //eliminado logico
+    @Transactional
+    public void deshabilitarMedico(@PathVariable Long id){
+        Medico medico = medicoRepository.getReferenceById(id);
+        medico.desactivarMedico();
+    }
+
+
 
 }

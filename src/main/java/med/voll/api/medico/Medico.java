@@ -26,6 +26,9 @@ public class Medico {
     @Embedded
     private Direccion direccion;
 
+    //insercion de flag para habilitar o deshabilitar usuarios
+    private boolean activo;
+
     public Medico(DatosRegistroMedico datosRegistroMedico) {
         this.nombre = datosRegistroMedico.nombre();
         this.email = datosRegistroMedico.email();
@@ -33,6 +36,7 @@ public class Medico {
         this.telefono = datosRegistroMedico.telefono();
         this.especialidad = datosRegistroMedico.especialidad();
         this.direccion = new Direccion(datosRegistroMedico.direccion());
+        this.activo = true;
     }
 
     public void actualizarDatos(DatosActualizarMedico datosActualizarMedico) {
@@ -48,5 +52,9 @@ public class Medico {
             this.direccion = direccion.actualizaDatos(datosActualizarMedico.direccion());
 
         }
+    }
+
+    public void desactivarMedico() {
+        this.activo = false;
     }
 }
