@@ -7,6 +7,8 @@ import med.voll.api.medico.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
@@ -18,4 +20,12 @@ public class MedicoController {
     public void registrarMedicos(@RequestBody @Valid DatosRegistroMedico datosRegistroMedico ){
         medicoRepository.save(new Medico(datosRegistroMedico));
     }
+
+    @GetMapping
+    //@RequestMapping("/list")
+    public List<Medico> listadoMedicos(){
+        return medicoRepository.findAll();
+    }
+
+
 }
