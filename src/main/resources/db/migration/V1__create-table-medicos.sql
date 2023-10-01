@@ -11,5 +11,4 @@ numero varchar(20),
 ciudad varchar(100) not null,
 
 primary key(id)
-
 );
