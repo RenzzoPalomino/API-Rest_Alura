@@ -1,6 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,13 @@ public class MedicoController {
     public void actualizarMedicos(@RequestBody @Valid DatosActualizarMedico datosActualizarMedico){
         Medico medico = medicoRepository.getReferenceById(datosActualizarMedico.id());
         medico.actualizarDatos(datosActualizarMedico);
+    }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void eliminarMedico(@PathVariable Long id){
+        Medico medico = medicoRepository.getReferenceById(id);
+        medicoRepository.delete(medico);
 
     }
 
