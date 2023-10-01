@@ -26,7 +26,8 @@ public class MedicoController {
 
     @GetMapping
     public Page<DatosListadoMedico> listadoMedicos(Pageable paginacion){
-       // return medicoRepository.findAll().stream().map(DatosListadoMedico::new).toList();
+       //http://localhost:8080/medicos?size=1
+        // http://localhost:8080/medicos?size=1&page=1
         return medicoRepository.findAll(paginacion).map(DatosListadoMedico::new);
     }
 
