@@ -13,7 +13,7 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    @Value("{api.security.secret}")
+    @Value("{api.security.secret}") //la forma correcta es de este modo "${api.security.secret}" pero por alguna razon a mi no me funciona asi xD
     private String apiSecret;  //deberian utilizar variables de ambiente
 
     public String generarToken(Usuario usuario){
